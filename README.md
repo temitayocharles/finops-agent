@@ -4,6 +4,12 @@ FinOps Agent is a production-tested Kubernetes cost intelligence and optimizatio
 
 It has been exercised over months in commercial operations and is now available for organizations that want evidence-backed cost analysis without turning every optimization signal into an automatic infrastructure change.
 
+## Architecture
+
+![FinOps Agent Architecture](./ARCHITECTURE.svg)
+
+The architecture follows a closed evidence loop: operational and cost signals are collected, modeled, analyzed, converted into evidence-backed recommendations, reviewed by operators, and measured again after approved changes so modeled opportunity remains distinct from verified savings.
+
 ## What it does
 
 - Analyzes Kubernetes workload and resource evidence.

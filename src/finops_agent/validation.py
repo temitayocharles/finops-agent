@@ -13,10 +13,10 @@ def validate_payload(payload: dict[str, Any]) -> None:
         raise ValueError("currency must be a three-letter code")
     workloads = payload.get("workloads", [])
     if not isinstance(workloads, list):
-        raise ValueError("workloads must be a JSON array")
+        raise TypeError("workloads must be a JSON array")
     for index, item in enumerate(workloads):
         if not isinstance(item, dict):
-            raise ValueError(f"workloads[{index}] must be an object")
+            raise TypeError(f"workloads[{index}] must be an object")
         for field in ("namespace", "name"):
             if not str(item.get(field, "")).strip():
                 raise ValueError(f"workloads[{index}].{field} is required")

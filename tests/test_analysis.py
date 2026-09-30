@@ -1,6 +1,5 @@
 from finops_agent.analysis import analyze_workloads
 from finops_agent.models import WorkloadObservation
-from finops_agent.io import analyze_payload
 
 
 def test_rightsize_when_utilization_is_low():
@@ -23,6 +22,8 @@ def test_missing_requests_is_investigate():
 
 
 def test_payload_validation_rejects_negative_usage():
+    from finops_agent.io import analyze_payload
+
     try:
         analyze_payload({"workloads": [{"namespace": "default", "name": "bad", "cpu_avg_cores": -1}]})
     except ValueError as exc:

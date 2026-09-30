@@ -1,0 +1,8 @@
+{
+  "currency": "USD",
+  "modeled_monthly_infrastructure_cost": 4200.0,
+  "workloads": [
+    {"namespace":"storefront","name":"catalog-api","kind":"Deployment","cpu_requested_cores":2.0,"memory_requested_gib":4.0,"cpu_avg_cores":0.35,"memory_avg_gib":0.9,"observation_hours":72,"monthly_cost":280.0},
+    {"namespace":"payments","name":"payment-worker","kind":"Deployment","cpu_requested_cores":1.0,"memory_requested_gib":2.0,"cpu_avg_cores":0.72,"memory_avg_gib":1.5,"observation_hours":72,"monthly_cost":190.0}
+  ]
+}

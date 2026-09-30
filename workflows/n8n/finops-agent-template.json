@@ -1,0 +1,10 @@
+{
+  "name":"FinOps Agent - Scheduled Analysis",
+  "nodes":[
+    {"name":"Weekly Scan","type":"n8n-nodes-base.scheduleTrigger","typeVersion":1.3,"position":[0,0],"parameters":{"rule":{"interval":[{"field":"cronExpression","expression":"0 3 * * 1"}]}}},
+    {"name":"Run FinOps Analysis","type":"n8n-nodes-base.httpRequest","typeVersion":4.5,"position":[260,0],"parameters":{"method":"POST","url":"={{ $env.FINOPS_AGENT_URL + '/v1/analyze' }}","sendBody":true,"contentType":"json","specifyBody":"json","jsonBody":"={{ $json }}"}},
+    {"name":"Deliver Report","type":"n8n-nodes-base.httpRequest","typeVersion":4.5,"position":[520,0],"parameters":{"method":"POST","url":"={{ $env.FINOPS_REPORT_WEBHOOK }}","sendBody":true,"contentType":"json","specifyBody":"json","jsonBody":"={{ $json }}"}}
+  ],
+  "connections":{"Weekly Scan":{"main":[[{"node":"Run FinOps Analysis","type":"main","index":0}]]},"Run FinOps Analysis":{"main":[[{"node":"Deliver Report","type":"main","index":0}]]}},
+  "settings":{"executionOrder":"v1"}
+}

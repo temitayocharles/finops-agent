@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finops-agent
+  namespace: finops-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: finops-agent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: finops-agent
+    spec:
+      serviceAccountName: finops-agent
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: finops-agent
+          image: ghcr.io/your-organization/finops-agent:1.0.0
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet: {path: /healthz, port: http}
+          livenessProbe:
+            httpGet: {path: /healthz, port: http}
+          resources:
+            requests: {cpu: 50m, memory: 96Mi}
+            limits: {cpu: 500m, memory: 384Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            capabilities: {drop: ["ALL"]}

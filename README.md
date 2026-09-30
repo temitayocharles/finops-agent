@@ -57,6 +57,24 @@ The manifests under `deploy/kubernetes/` provide a secure baseline with non-root
 
 Review RBAC, telemetry access, pricing inputs, and network policy for your environment before production deployment.
 
+## Build and publish your own image
+
+FinOps Agent ships no prebuilt image. Build it yourself and push it to your own registry:
+
+```bash
+docker build -t ghcr.io/<your-org>/finops-agent:1.0.0 .
+docker push ghcr.io/<your-org>/finops-agent:1.0.0
+```
+
+Then point the Kubernetes deployment at your image. Either edit the `ghcr.io/your-organization/finops-agent:1.0.0` placeholder in `deploy/kubernetes/deployment.yaml`, or update a live deployment directly:
+
+```bash
+kubectl set image deployment/finops-agent \
+  -n finops-system finops-agent=ghcr.io/<your-org>/finops-agent:1.0.0
+```
+
+Prefer running locally instead? `pip install -e '.[api]'` followed by `uvicorn finops_agent.api:app --host 0.0.0.0 --port 8080` is all you need.
+
 ## Cost semantics
 
 FinOps Agent deliberately keeps these values distinct:
